@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import * as Sentry from '@sentry/nextjs';
 
 interface State {
   hasError: boolean;
@@ -21,32 +20,15 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.log({ error, errorInfo });
-    Sentry.captureException(error, { extra: errorInfo });
+    // Task 3: Basic error logging - Sentry can be integrated when DSN is available
   }
 
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{ 
-          padding: '20px', 
-          border: '2px solid #ff4444', 
-          backgroundColor: '#ffe6e6',
-          borderRadius: '8px',
-          margin: '10px 0'
-        }}>
-          <h2 style={{ color: '#cc0000' }}>Oops, there is an error!</h2>
-          <p>Something went wrong. The error has been logged.</p>
-          <button 
-            onClick={() => this.setState({ hasError: false })}
-            style={{
-              backgroundColor: '#4CAF50',
-              color: 'white',
-              padding: '10px 15px',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
+        <div>
+          <h2>Oops, there is an error!</h2>
+          <button onClick={() => this.setState({ hasError: false })}>
             Try again?
           </button>
         </div>
